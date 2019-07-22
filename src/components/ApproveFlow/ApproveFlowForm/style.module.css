@@ -1,0 +1,27 @@
+.root {
+  width: 600px;
+  padding: 30px;
+  border: 1px solid gray;
+}
+
+.head {
+  padding: 15px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.threshold {
+
+}
+
+.range {
+  background-color: lightgray;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.approvers {
+  padding: 15px;
+}
