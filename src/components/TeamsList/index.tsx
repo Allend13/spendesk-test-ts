@@ -31,10 +31,15 @@ class Teams extends Component<TeamsProps> {
   }
 
   private renderTeams = () => {
-    const { teams } = this.props
+    const { teams, history } = this.props
 
     return teams.map(({ id, name, users }) => (
-      <Card key={id} title={name} className={css.card}>
+      <Card
+        key={id}
+        title={name}
+        className={css.card}
+        onClick={() => history.push(`/approve-flow/${id}`)}
+      >
         {this.renderFirst3Users(users)}
       </Card>
     ))
