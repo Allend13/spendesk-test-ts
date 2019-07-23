@@ -9,6 +9,7 @@ declare const styles: {
   readonly "addApprovers": string;
   readonly "addApproversSelect": string;
   readonly "addBtn": string;
+  readonly "removeIcon": string;
 };
 export = styles;
 

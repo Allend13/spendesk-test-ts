@@ -12,10 +12,13 @@ import {
   removeApproveUser as removeApproveUserAction
 } from '../../store/approveFlows/actions'
 import ApproveFlowForm from './ApproveFlowForm'
+import {
+  freeToAddUsersSelector,
+  currentApproveThresholdsSelector,
+  currentTeamWithUserDataSelector
+} from './selectors'
 
-import { Team } from '../../store/teams/types'
-import { ApproveFlowProps, TeamWithUsersData } from './interface'
-
+import { ApproveFlowProps } from './interface'
 import { ApplicationState } from '../../store'
 
 class ApproveFlow extends Component<ApproveFlowProps> {
@@ -33,7 +36,8 @@ class ApproveFlow extends Component<ApproveFlowProps> {
       updateApproveThreshold,
       removeApproveThreshold,
       addApproveUser,
-      removeApproveUser
+      removeApproveUser,
+      freeToAddUsers
     } = this.props
 
     if (!currentTeam) return 'No team with this id'
@@ -41,6 +45,7 @@ class ApproveFlow extends Component<ApproveFlowProps> {
     return (
       <ApproveFlowForm
         currentTeam={currentTeam}
+        freeToAddUsers={freeToAddUsers}
         approveThresholds={approveThresholds}
         addApproveThreshold={addApproveThreshold}
         updateApproveThreshold={updateApproveThreshold}
@@ -62,27 +67,14 @@ class ApproveFlow extends Component<ApproveFlowProps> {
   }
 }
 
-// Should be memoized with reselect :)
-const getCurrentTeam = (state: ApplicationState, teamId: string): TeamWithUsersData | null => {
-  const { teams, users } = state
-  if (!teams.loaded || !users.loaded) return null
-
-  const currentTeam: Team | undefined = teams.data.find(({ id }) => id === teamId)
-  if (!currentTeam) return null
-
-  return {
-    ...currentTeam,
-    usersData: users.data.filter(({ id }) => currentTeam.users.includes(id))
-  }
-}
-
 export default connect(
-  (state: ApplicationState, { match: { params } }: ApproveFlowProps) => ({
+  (state: ApplicationState, ownProps: ApproveFlowProps) => ({
     loading: state.teams.loading || state.users.loading,
     teamsLoaded: state.teams.loaded,
     usersLoaded: state.users.loaded,
-    currentTeam: getCurrentTeam(state, params.teamId),
-    approveThresholds: state.approveFlows[params.teamId] || []
+    currentTeam: currentTeamWithUserDataSelector(state, ownProps),
+    approveThresholds: currentApproveThresholdsSelector(state, ownProps),
+    freeToAddUsers: freeToAddUsersSelector(state, ownProps)
   }),
   {
     fetchTeams: fetchTeamsAction,

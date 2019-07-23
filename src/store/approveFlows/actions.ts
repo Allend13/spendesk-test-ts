@@ -33,7 +33,7 @@ export const addApproveUser = (teamId: string, thresholdId: string, userId: stri
   })
 
 export const removeApproveUser = (teamId: string, thresholdId: string, userId: string) =>
-  action(ApproveFlowsActionTypes.ADD_APPROVE_USER, {
+  action(ApproveFlowsActionTypes.REMOVE_APPROVE_USER, {
     teamId,
     thresholdId,
     userId

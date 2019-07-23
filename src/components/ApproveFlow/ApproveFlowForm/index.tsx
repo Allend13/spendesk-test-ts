@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Button, Input, Avatar, Icon, Select } from 'antd'
+import { Button, Input, Avatar, Icon, Select } from 'antd'
 
 import { ApproveFlowFormProps } from './interface'
 import { ApproveThreshold } from '../../../store/approveFlows/types'
@@ -11,15 +11,16 @@ const { Option } = Select
 class ApproveFlowForm extends Component<ApproveFlowFormProps> {
   private renderAddApprovers = ({ id: thresholdId }: ApproveThreshold) => {
     const {
+      freeToAddUsers,
       addApproveUser,
-      currentTeam: { id: teamId, usersData }
+      currentTeam: { id: teamId }
     } = this.props
 
     const handleChange = (userId: string) => addApproveUser(teamId, thresholdId, userId)
 
     return (
-      <Select onChange={handleChange} className={css.addApproversSelect}>
-        {usersData.map(({ id, first_name, last_name }) => (
+      <Select value="" onChange={handleChange} className={css.addApproversSelect}>
+        {freeToAddUsers.map(({ id, first_name, last_name }) => (
           <Option key={id} value={id}>{`${first_name} ${last_name}`}</Option>
         ))}
       </Select>
@@ -30,12 +31,15 @@ class ApproveFlowForm extends Component<ApproveFlowFormProps> {
     const {
       approveThresholds,
       removeApproveThreshold,
+      removeApproveUser,
       currentTeam: { id: teamId, usersData }
     } = this.props
 
     return approveThresholds.map(threshold => {
       const { id: thresholdId, from, to, approversIds } = threshold
       const handleChange = this.handleInputChange(threshold)
+
+      const handleDeleteUser = (userId: string) => removeApproveUser(teamId, thresholdId, userId)
 
       return (
         <div key={thresholdId} className={css.threshold}>
@@ -63,6 +67,11 @@ class ApproveFlowForm extends Component<ApproveFlowFormProps> {
                 <div key={approverId} className={css.approversItem}>
                   <Avatar icon="user" />
                   {` ${first_name} ${last_name}`}
+                  <Icon
+                    type="close"
+                    className={css.removeIcon}
+                    onClick={() => handleDeleteUser(user.id)}
+                  />
                 </div>
               )
             })}

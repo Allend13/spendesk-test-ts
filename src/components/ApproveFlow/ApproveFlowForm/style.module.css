@@ -56,3 +56,15 @@
   display: flex;
   justify-content: center;
 }
+
+.removeIcon {
+  margin-left: 5px;
+  position: relative;
+  top: -7.5px;
+}
+
+.removeIcon > svg {
+  width: 12px;
+  position: relative;
+  top: -3px;
+}

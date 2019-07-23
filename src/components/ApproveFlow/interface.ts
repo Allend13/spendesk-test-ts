@@ -28,6 +28,7 @@ export interface ApproveFlowProps
   usersLoaded: boolean
   currentTeam: TeamWithUsersData | null
   approveThresholds: ApproveThreshold[]
+  freeToAddUsers: User[]
   fetchTeams: () => void
   fetchUsers: () => void
 }
