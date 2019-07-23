@@ -15,8 +15,8 @@ const reducer: Reducer<ApproveFlowsState> = (state = initialState, action) => {
       const newThreshold = {
         id: uuid(),
         approversIds: [],
-        from: 0,
-        to: 0
+        from: undefined,
+        to: undefined
       }
 
       nextState[teamId].push(newThreshold)

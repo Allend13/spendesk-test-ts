@@ -4,9 +4,9 @@ export interface ApproveThreshold {
   // users ids that are approvers
   approversIds: string[]
   // threshold minimum in USD
-  from: number
+  from?: number
   // threshold maximum in USD
-  to: number
+  to?: number
 }
 
 export enum ApproveFlowsActionTypes {
