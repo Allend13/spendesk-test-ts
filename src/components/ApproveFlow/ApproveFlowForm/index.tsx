@@ -1,13 +1,32 @@
 import React, { Component } from 'react'
-import { Form, Button, Input, Avatar, Icon } from 'antd'
+import { Form, Button, Input, Avatar, Icon, Select } from 'antd'
 
 import { ApproveFlowFormProps } from './interface'
 import { ApproveThreshold } from '../../../store/approveFlows/types'
 
 import css from './style.module.css'
 
+const { Option } = Select
+
 class ApproveFlowForm extends Component<ApproveFlowFormProps> {
-  renderThresholds = () => {
+  private renderAddApprovers = ({ id: thresholdId }: ApproveThreshold) => {
+    const {
+      addApproveUser,
+      currentTeam: { id: teamId, usersData }
+    } = this.props
+
+    const handleChange = (userId: string) => addApproveUser(teamId, thresholdId, userId)
+
+    return (
+      <Select onChange={handleChange} className={css.addApproversSelect}>
+        {usersData.map(({ id, first_name, last_name }) => (
+          <Option key={id} value={id}>{`${first_name} ${last_name}`}</Option>
+        ))}
+      </Select>
+    )
+  }
+
+  private renderThresholds = () => {
     const {
       approveThresholds,
       removeApproveThreshold,
@@ -19,7 +38,7 @@ class ApproveFlowForm extends Component<ApproveFlowFormProps> {
       const handleChange = this.handleInputChange(threshold)
 
       return (
-        <Form key={thresholdId} className={css.threshold}>
+        <div key={thresholdId} className={css.threshold}>
           <div className={css.head}>
             <Icon type="delete" onClick={() => removeApproveThreshold(teamId, thresholdId)} />
           </div>
@@ -30,6 +49,7 @@ class ApproveFlowForm extends Component<ApproveFlowFormProps> {
               addonBefore="from"
               value={from}
               onChange={handleChange}
+              className={css.input}
             />
             <Input type="number" name="to" addonBefore="to" value={to} onChange={handleChange} />
           </div>
@@ -40,14 +60,21 @@ class ApproveFlowForm extends Component<ApproveFlowFormProps> {
 
               const { first_name, last_name } = user
               return (
-                <div key={approverId}>
+                <div key={approverId} className={css.approversItem}>
                   <Avatar icon="user" />
                   {` ${first_name} ${last_name}`}
                 </div>
               )
             })}
           </div>
-        </Form>
+          <div className={css.addApprovers}>
+            <div>
+              <strong>Add approvers: </strong>
+            </div>
+            {this.renderAddApprovers(threshold)}
+          </div>
+          <div />
+        </div>
       )
     })
   }
@@ -77,8 +104,8 @@ class ApproveFlowForm extends Component<ApproveFlowFormProps> {
       <div className={css.root}>
         <h3>Set up approvers</h3>
         <p>Who can approve requests of the team {name}</p>
-        <div>
-          {this.renderThresholds()}
+        <div>{this.renderThresholds()}</div>
+        <div className={css.addBtn}>
           <Button onClick={() => addApproveThreshold(teamId)}>Add threshold</Button>
         </div>
       </div>

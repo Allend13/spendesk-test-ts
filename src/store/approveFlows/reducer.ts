@@ -6,6 +6,7 @@ export const initialState: ApproveFlowsState = {}
 
 const reducer: Reducer<ApproveFlowsState> = (state = initialState, action) => {
   switch (action.type) {
+    // THRESHOLDS REDUCERS
     case ApproveFlowsActionTypes.ADD_APPROVE_THRESHOLD: {
       const { teamId } = action.payload
       const nextState = { ...state }
@@ -23,7 +24,6 @@ const reducer: Reducer<ApproveFlowsState> = (state = initialState, action) => {
 
       return nextState
     }
-
     case ApproveFlowsActionTypes.UPDATE_APPROVE_THRESHOLD: {
       const { teamId, thresholdId, threshold } = action.payload
       const nextState = { ...state }
@@ -36,17 +36,41 @@ const reducer: Reducer<ApproveFlowsState> = (state = initialState, action) => {
 
       return nextState
     }
-
     case ApproveFlowsActionTypes.REMOVE_APPROVE_THRESHOLD: {
       const { teamId, thresholdId } = action.payload
-
-      if (!state[teamId]) return state
 
       return {
         ...state,
         [teamId]: state[teamId].filter(({ id }) => id !== thresholdId)
       }
     }
+
+    // APPROVERS REDUCERS
+    case ApproveFlowsActionTypes.ADD_APPROVE_USER: {
+      const { teamId, thresholdId, userId } = action.payload
+      const nextState = { ...state }
+
+      nextState[teamId].forEach(({ id, approversIds }) => {
+        if (id === thresholdId) approversIds.push(userId)
+      })
+
+      return nextState
+    }
+
+    case ApproveFlowsActionTypes.REMOVE_APPROVE_USER: {
+      const { teamId, thresholdId, userId } = action.payload
+      const nextState = { ...state }
+
+      nextState[teamId].forEach(({ id, approversIds }) => {
+        if (id === thresholdId) {
+          const index = approversIds.indexOf(userId)
+          approversIds.splice(index, 1)
+        }
+      })
+
+      return nextState
+    }
+
     default: {
       return state
     }

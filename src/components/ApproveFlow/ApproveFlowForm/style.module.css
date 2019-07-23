@@ -11,7 +11,7 @@
 }
 
 .threshold {
-
+  margin-bottom: 30px;
 }
 
 .range {
@@ -22,6 +22,37 @@
   padding: 0 15px;
 }
 
+.input:first-child {
+  margin-right: 30px;
+}
+
+.input:last-child {
+  margin-left: 30px;
+}
+
 .approvers {
   padding: 15px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.approversItem {
+  margin: 7.5px
+}
+
+.addApprovers {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.addApproversSelect {
+  width: 200px !important;
+  margin-left: 15px !important;
+}
+
+.addBtn {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
 }

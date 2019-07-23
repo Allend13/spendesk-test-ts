@@ -11,8 +11,10 @@ export interface ApproveThreshold {
 
 export enum ApproveFlowsActionTypes {
   ADD_APPROVE_THRESHOLD = '@@approveFlows/ADD_APPROVE_THRESHOLD',
-  UPDATE_APPROVE_THRESHOLD = '@@approveFlows/UPDATE_APPROVE_THRESHOLD ',
-  REMOVE_APPROVE_THRESHOLD = '@@approveFlows/REMOVE_APPROVE_THRESHOLD'
+  UPDATE_APPROVE_THRESHOLD = '@@approveFlows/UPDATE_APPROVE_THRESHOLD',
+  REMOVE_APPROVE_THRESHOLD = '@@approveFlows/REMOVE_APPROVE_THRESHOLD',
+  ADD_APPROVE_USER = '@@approveFlows/ADD_APPROVE_USER',
+  REMOVE_APPROVE_USER = '@@approveFlows/REMOVE_APPROVE_USER'
 }
 
 export interface ApproveFlowsState {

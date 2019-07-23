@@ -16,6 +16,8 @@ export interface ApproveFlowActions {
   addApproveThreshold: (teamId: string) => void
   updateApproveThreshold: (teamId: string, thresholdId: string, threshold: ApproveThreshold) => void
   removeApproveThreshold: (teamId: string, thresholdId: string) => void
+  addApproveUser: (teamId: string, thresholdId: string, userId: string) => void
+  removeApproveUser: (teamId: string, thresholdId: string, userId: string) => void
 }
 
 export interface ApproveFlowProps

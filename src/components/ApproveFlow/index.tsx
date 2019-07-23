@@ -7,7 +7,9 @@ import { fetchRequest as fetchUsersAction } from '../../store/users/actions'
 import {
   addApproveThreshold as addApproveThresholdAction,
   updateApproveThreshold as updateApproveThresholdAction,
-  removeApproveThreshold as removeApproveThresholdAction
+  removeApproveThreshold as removeApproveThresholdAction,
+  addApproveUser as addApproveUserAction,
+  removeApproveUser as removeApproveUserAction
 } from '../../store/approveFlows/actions'
 import ApproveFlowForm from './ApproveFlowForm'
 
@@ -29,7 +31,9 @@ class ApproveFlow extends Component<ApproveFlowProps> {
       approveThresholds,
       addApproveThreshold,
       updateApproveThreshold,
-      removeApproveThreshold
+      removeApproveThreshold,
+      addApproveUser,
+      removeApproveUser
     } = this.props
 
     if (!currentTeam) return 'No team with this id'
@@ -41,6 +45,8 @@ class ApproveFlow extends Component<ApproveFlowProps> {
         addApproveThreshold={addApproveThreshold}
         updateApproveThreshold={updateApproveThreshold}
         removeApproveThreshold={removeApproveThreshold}
+        addApproveUser={addApproveUser}
+        removeApproveUser={removeApproveUser}
       />
     )
   }
@@ -83,6 +89,8 @@ export default connect(
     fetchUsers: fetchUsersAction,
     addApproveThreshold: addApproveThresholdAction,
     updateApproveThreshold: updateApproveThresholdAction,
-    removeApproveThreshold: removeApproveThresholdAction
+    removeApproveThreshold: removeApproveThresholdAction,
+    addApproveUser: addApproveUserAction,
+    removeApproveUser: removeApproveUserAction
   }
 )(ApproveFlow)
